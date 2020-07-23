@@ -5,9 +5,11 @@ project(ApeConfig
 	DESCRIPTION "C++ compiler, OS, and standard library detect"
 	LANGUAGES CXX)
 
-if (NOT AMUN_INCLUDED)
+if (NOT DEFINED APE_SUPERPROJECT AND NOT AMUN_INCLUDED)
+	message(STATUS "***DEBUG 1")
 	find_package(Ape 0.1.0 QUIET COMPONENTS amun)	
 	if (NOT Ape_FOUND)
+		message(STATUS "***DEBUG 2")
 		find_package(ApeAmun 0.1.0 QUIET)
 		if (NOT ApeAmun_FOUND)
 			include(FetchContent)
@@ -19,8 +21,9 @@ if (NOT AMUN_INCLUDED)
 		endif()
 	endif()
 endif()
-
 amun_disable_build_in_source()
+
+
 amun_check_build(CONFIG NORMAL INSTALL TEST)
 
 if(${CONFIG_NORMAL})
@@ -34,8 +37,10 @@ endif()
 if(${CONFIG_INSTALL})
 	amun_get_cmake_install_dir(CONFIG_INSTALL_DIR)
 
-	amun_install_targets(${CONFIG_INSTALL_DIR} ape_config)
-	amun_install_config_version(${CONFIG_INSTALL_DIR} NOARCH)
+	if (NOT DEFINED APE_SUPERPROJECT)
+		amun_install_targets(${CONFIG_INSTALL_DIR} ape_config)
+		amun_install_config_version(${CONFIG_INSTALL_DIR} NOARCH)
+	endif()
 
 	install(DIRECTORY include/ DESTINATION include)
 endif()
