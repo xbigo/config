@@ -6,10 +6,8 @@ project(ApeConfig
 	LANGUAGES CXX)
 
 if (NOT DEFINED APE_SUPERPROJECT AND NOT AMUN_INCLUDED)
-	message(STATUS "***DEBUG 1")
 	find_package(Ape 0.1.0 QUIET COMPONENTS amun)	
 	if (NOT Ape_FOUND)
-		message(STATUS "***DEBUG 2")
 		find_package(ApeAmun 0.1.0 QUIET)
 		if (NOT ApeAmun_FOUND)
 			include(FetchContent)
