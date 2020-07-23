@@ -1,42 +1,48 @@
 cmake_minimum_required(VERSION 3.14)
 
-file(STRINGS include/ape/config/version.hpp _define_version_ REGEX "APE_CONFIG_VERSION")
-string(REGEX MATCH "([0-9\\.]+)" _version_str_ "${_define_version_}")
-if (CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-    message(FATAL_ERROR "Building in-source is not supported! Create a build dir and remove ${CMAKE_SOURCE_DIR}/CMakeCache.txt")
-endif()
-
 project(ApeConfig 
-	VERSION ${_version_str_}
+	VERSION "0.1.0"
 	DESCRIPTION "C++ compiler, OS, and standard library detect"
 	LANGUAGES CXX)
 
-add_library(ape_config INTERFACE)
-add_library(Ape::config ALIAS ape_config )
-
-target_compile_features(ape_config INTERFACE cxx_std_17)
-#target_include_directories(ape_config INTERFACE include)
-target_include_directories(ape_config INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
-
-set(CONFIG_INSTALL_DIR lib/cmake/${PROJECT_NAME}-${PROJECT_VERSION})
-install(TARGETS ape_config EXPORT ${PROJECT_NAME}Targets)
-install(EXPORT ${PROJECT_NAME}Targets DESTINATION ${CONFIG_INSTALL_DIR} NAMESPACE Ape:: FILE ${PROJECT_NAME}Config.cmake)
-install(DIRECTORY include/ DESTINATION include)
-
-include(CMakePackageConfigHelpers)
-set(OLD_CMAKE_SIZEOF_VOID_P ${CMAKE_SIZEOF_VOID_P})
-unset(CMAKE_SIZEOF_VOID_P)
-write_basic_package_version_file("${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake" COMPATIBILITY AnyNewerVersion)
-set(CMAKE_SIZEOF_VOID_P ${OLD_CMAKE_SIZEOF_VOID_P})
-
-install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake" DESTINATION ${CONFIG_INSTALL_DIR})
-
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-	# Top project, enable testing and add 3rd parties 
-	enable_testing()
+if (NOT AMUN_INCLUDED)
+	find_package(Ape 0.1.0 QUIET COMPONENTS amun)	
+	if (NOT Ape_FOUND)
+		find_package(ApeAmun 0.1.0 QUIET)
+		if (NOT ApeAmun_FOUND)
+			include(FetchContent)
+			FetchContent_Declare( amun
+				GIT_REPOSITORY https://github.com/xbigo/amun.git
+				)
+			FetchContent_MakeAvailable(amun)
+			include(${amun_SOURCE_DIR}/lib/amun/amun.cmake)
+		endif()
+	endif()
 endif()
 
-if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR APE_CONFIG_BUILD_TESTING) AND BUILD_TESTING)
+amun_disable_build_in_source()
+amun_check_build(CONFIG NORMAL INSTALL TEST)
+
+if(${CONFIG_NORMAL})
+	add_library(ape_config INTERFACE)
+	add_library(Ape::config ALIAS ape_config )
+	target_compile_features(ape_config INTERFACE cxx_std_17)
+	#target_include_directories(ape_config INTERFACE include)
+	target_include_directories(ape_config INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+endif()
+
+if(${CONFIG_INSTALL})
+	amun_get_cmake_install_dir(CONFIG_INSTALL_DIR)
+
+	amun_install_targets(${CONFIG_INSTALL_DIR} ape_config)
+	amun_install_config_version(${CONFIG_INSTALL_DIR} NOARCH)
+
+	install(DIRECTORY include/ DESTINATION include)
+endif()
+
+if(${CONFIG_TEST})
+	amun_enable_testing()
 	add_subdirectory(test)
 endif()
+
 
