@@ -13,16 +13,16 @@
 #	define APE_INTERFACE APE_DLL_INTERFACE
 #else
 #	define APE_API			//for static
-#	define APE_INTERFACE 
+#	define APE_INTERFACE
 #endif
 
-namespace ape{
-    namespace stl{
-        using namespace ::std;
-    }
-    
-	using std::size_t;
+BEGIN_APE_NAMESPACE
+namespace stl{
+    using namespace ::std;
 }
+
+using std::size_t;
+END_APE_NAMESPACE
 
 #endif //end APE_CONFIG_H__
 
