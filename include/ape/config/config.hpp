@@ -68,6 +68,26 @@ namespace stdlib{
 	struct dinkumware_stdlib : stdlib_tag {};
 	struct libcpp_stdlib : stdlib_tag {};	//for clang
 }
+namespace cppstandard {
+	struct cppstandard_tag{};
+	struct cpppre98_tag : cppstandard_tag{};
+	struct cpp98_tag : cpppre98_tag{};
+	struct cpp03_tag : cpp98_tag{};
+	struct cpp11_tag : cpp03_tag{};
+	struct cpp14_tag : cpp11_tag{};
+	struct cpp17_tag : cpp14_tag{};
+	struct cpp20_tag : cpp17_tag{};
+
+	enum version{
+		cpppre98 = 1,
+		cpp98 = 199711L,
+		cpp03 = cpp98, //TODO: how to check?
+		cpp11 = 201103L,
+		cpp14 = 201402L,
+		cpp17 = 201703L,
+		cpp20 = 202002L
+	};
+}
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 #	define LINUX_OS_	1
@@ -152,7 +172,7 @@ using compiler_type = compiler::dmc_compiler;
 #	define COMPILER_TYPE intel_compiler
 using compiler_type = compiler::intel_compiler;
 
-#elif defined __clang__ 
+#elif defined __clang__
 #	define CLANG_COMPILER_ 1
 #	define COMPILER_TYPE clang_compiler
 using compiler_type = compiler::clang_compiler;
@@ -221,7 +241,7 @@ using compiler_type = compiler::msvc_compiler;
 
 #  error "Unknown compiler"
 
-#endif	
+#endif
 
 
 #if defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION)
@@ -277,6 +297,34 @@ using stdlib_type = stdlib::libcpp_stdlib;
 #elif defined (APE_ASSERT_CONFIG)
 #  error "Unknown standard library"
 
+#endif
+
+#if __cplusplus == 1
+#	define CPP_PRE98	1
+#	define CPP_STANDARD cpppre98
+using cpp_standard = cppstandard::cpppre98_tag;
+#elif __cplusplus == 199711L
+#	define CPP_98	1
+#	define CPP_STANDARD cpp98
+using cpp_standard = cppstandard::cpp98_tag;
+#elif __cplusplus == 201103L
+#	define CPP_11	1
+#	define CPP_STANDARD cpp11
+using cpp_standard = cppstandard::cpp11_tag;
+#elif __cplusplus == 201402L
+#	define CPP_14	1
+#	define CPP_STANDARD cpp14
+using cpp_standard = cppstandard::cpp14_tag;
+#elif __cplusplus == 201703L
+#	define CPP_17	1
+#	define CPP_STANDARD cpp17
+using cpp_standard = cppstandard::cpp17_tag;
+#elif __cplusplus == 202002L
+#	define CPP_20	1
+#	define CPP_STANDARD cpp20
+using cpp_standard = cppstandard::cpp20_tag;
+#else
+# error "Unknown cpp standard version"
 #endif
 
 END_APE_NAMESPACE
