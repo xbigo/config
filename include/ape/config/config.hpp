@@ -11,8 +11,8 @@
 #define APE_NAMESPACE ape
 #endif
 
-#define BEGIN_APE_NAMESPACE namespace APE_NAMESPACE {
-#define END_APE_NAMESPACE }
+#define BEGIN_APE_NAMESPACE namespace APE_NAMESPACE { inline namespace v1{
+#define END_APE_NAMESPACE }}
 
 BEGIN_APE_NAMESPACE
 
