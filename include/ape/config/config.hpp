@@ -88,6 +88,13 @@ namespace cppstandard {
 		cpp20 = 202002L
 	};
 }
+#define CPP_STD_PRE98 1
+#define CPP_STD_98 199711L
+#define CPP_STD_03 199711L
+#define CPP_STD_11 201103L
+#define CPP_STD_14 201402L
+#define CPP_STD_17 201703L
+#define CPP_STD_20 202002L
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 #	define LINUX_OS_	1
@@ -301,27 +308,27 @@ using stdlib_type = stdlib::libcpp_stdlib;
 
 #if __cplusplus == 1
 #	define CPP_PRE98	1
-#	define CPP_STANDARD cpppre98
+#	define CPP_STANDARD CPP_STD_PRE98
 using cpp_standard = cppstandard::cpppre98_tag;
 #elif __cplusplus == 199711L
 #	define CPP_98	1
-#	define CPP_STANDARD cpp98
+#	define CPP_STANDARD CPP_STD_98
 using cpp_standard = cppstandard::cpp98_tag;
 #elif __cplusplus == 201103L
 #	define CPP_11	1
-#	define CPP_STANDARD cpp11
+#	define CPP_STANDARD CPP_STD_11
 using cpp_standard = cppstandard::cpp11_tag;
 #elif __cplusplus == 201402L
 #	define CPP_14	1
-#	define CPP_STANDARD cpp14
+#	define CPP_STANDARD CPP_STD_14
 using cpp_standard = cppstandard::cpp14_tag;
 #elif __cplusplus == 201703L
 #	define CPP_17	1
-#	define CPP_STANDARD cpp17
+#	define CPP_STANDARD CPP_STD_17
 using cpp_standard = cppstandard::cpp17_tag;
 #elif __cplusplus == 202002L
 #	define CPP_20	1
-#	define CPP_STANDARD cpp20
+#	define CPP_STANDARD CPP_STD_20
 using cpp_standard = cppstandard::cpp20_tag;
 #else
 # error "Unknown cpp standard version"
