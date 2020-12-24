@@ -7,7 +7,11 @@
 #include <type_traits>
 
 #if __cplusplus < 201703L		//lower than 2017
-#warning  "Ape::Config is not designed to support C++ standard before 17"
+#if defined _MSC_VER
+#pragma message("Ape::Config is not designed to support C++ standard before 17. For MSVC, might can be fixed: target_compile_options(mytarget PUBLIC \"/Zc:__cplusplus\")") 
+#else
+#warning  "Ape::Config is not designed to support C++ standard before 17. For MSVC, might can be fixed: target_compile_options(mytarget PUBLIC \"/Zc:__cplusplus\")"
+#endif
 #endif
 
 
