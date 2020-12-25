@@ -32,6 +32,11 @@ if(${CONFIG_NORMAL})
 		target_compile_options(ape_config INTERFACE "/Zc:__cplusplus")
 	endif()
 	target_include_directories(ape_config INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+
+	amun_fake_project(ape_config_ 
+		SOURCES include/ape/config.hpp src/dummy.cpp
+		INCLUDES include
+		FOLDER Libs)
 endif()
 
 if(${CONFIG_INSTALL})
