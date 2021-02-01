@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(ApeConfig 
-	VERSION "0.3.0"
+	VERSION "0.4.0"
 	DESCRIPTION "C++ compiler, OS, and standard library detect"
 	LANGUAGES CXX)
 
