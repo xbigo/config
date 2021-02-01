@@ -438,6 +438,15 @@ using std::size_t;
 
 END_APE_NAMESPACE
 
+//Redefine GSL::Expects to remove the check for release build by default
+#if !defined(NDEBUG) || defined(APE_KEEP_CONTRACT)
+#define APE_Expects(cond) Expects(cond)
+#define APE_Ensures(cond) Ensures(cond)
+#else
+#define APE_Expects(cond) 
+#define APE_Ensures(cond) 
+#endif
+
 #ifdef __has_include
 #if __has_include("ape_user_postfix.hpp")
 #include "ape_user_postfix.hpp"
