@@ -13,7 +13,7 @@ if (NOT DEFINED APE_SUPERPROJECT AND NOT AMUN_INCLUDED)
 			include(FetchContent)
 			FetchContent_Declare( amun
 				GIT_REPOSITORY https://github.com/xbigo/amun.git
-				GIT_TAG v0.2.0
+				GIT_TAG v0.3.0
 				)
 			FetchContent_MakeAvailable(amun)
 			include(${amun_SOURCE_DIR}/lib/amun/amun.cmake)
