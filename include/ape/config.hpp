@@ -396,7 +396,7 @@ END_APE_NAMESPACE
 #define APE_FUNCTION __PRETTY_FUNCTION__
 #define APE_SHARED_EXPORT __attribute__ ((visibility ("default")))
 #define APE_SHARED_IMPORT __attribute__ ((visibility ("default")))
-#define APE_DLL_INTERFACE
+#define APE_SHARED_INTERFACE
 
 #elif defined(MSVC_COMPILER_)
 #if defined(_M_X64)
