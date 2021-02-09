@@ -400,9 +400,9 @@ END_APE_NAMESPACE
 
 #elif defined(MSVC_COMPILER_)
 #if defined(_M_X64)
-#define APE_ABI_PREFIX #  pragma pack(push,16)
+#define APE_ABI_PREFIX #pragma pack(push,16)
 #else
-#define APE_ABI_PREFIX #  pragma pack(push,8)
+#define APE_ABI_PREFIX #pragma pack(push,8)
 #endif
 
 #define APE_ABI_SUFFIX #pragma pack(pop)
