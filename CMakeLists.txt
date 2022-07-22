@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(ApeConfig 
+project(ApeConfig
 	VERSION "0.4.0"
 	DESCRIPTION "C++ compiler, OS, and standard library detect"
 	LANGUAGES CXX)
 
 if (NOT DEFINED APE_SUPERPROJECT AND NOT AMUN_INCLUDED)
-	find_package(Ape 0.2.0 QUIET COMPONENTS amun)	
+	find_package(Ape 0.2.0 QUIET COMPONENTS amun)
 	if (NOT Ape_FOUND)
 		find_package(ApeAmun 0.2.0 QUIET)
 		if (NOT ApeAmun_FOUND)
@@ -28,13 +28,13 @@ amun_check_build(CONFIG NORMAL INSTALL TEST)
 if(${CONFIG_NORMAL})
 	add_library(ape_config INTERFACE)
 	add_library(Ape::config ALIAS ape_config )
-	target_compile_features(ape_config INTERFACE cxx_std_17)
+	target_compile_features(ape_config INTERFACE cxx_std_20)
 	if (MSVC)
 		target_compile_options(ape_config INTERFACE "/Zc:__cplusplus")
 	endif()
 	target_include_directories(ape_config INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 
-	amun_fake_project(ape_config_ 
+	amun_fake_project(ape_config_
 		SOURCES include/ape/config.hpp src/dummy.cpp
 		INCLUDES include
 		FOLDER Libs)
@@ -55,5 +55,3 @@ if(${CONFIG_TEST})
 	amun_enable_testing()
 	add_subdirectory(test)
 endif()
-
-
