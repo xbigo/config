@@ -4,12 +4,12 @@ project(ApeConfigTest LANGUAGES CXX)
 
 amun_fetch_lib( catch
 	GIT_REPOSITORY ../Catch2.git
-	GIT_TAG v2.13.0 )
-
+	GIT_TAG v3.1.0 )
 
 amun_add_test(ape config
 	FEATURES cxx_std_20
 	SOURCES main.cpp
-	INCLUDES ../include "${catch_SOURCE_DIR}/single_include"
+	INCLUDES ../include
 	FOLDER unit_tests
+	LINKS PRIVATE Catch2::Catch2WithMain
 	)
