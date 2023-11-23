@@ -4,7 +4,7 @@ project(ApeConfigTest LANGUAGES CXX)
 
 amun_fetch_lib( catch
 	GIT_REPOSITORY ../Catch2.git
-	GIT_TAG v2.13.0 )
+	GIT_TAG v2.13.5 )
 
 
 amun_add_test(ape config
