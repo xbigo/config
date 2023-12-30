@@ -37,7 +37,7 @@ if(${CONFIG_NORMAL})
 	amun_reorg_project(ape_config
 		SOURCES include/ape/config.hpp
 		PRIVATE_SOURCES src/dummy.cpp
-		INCLUDES include
+		INCLUDES ../include
 		FOLDER Libs)
 endif()
 
