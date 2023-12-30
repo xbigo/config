@@ -34,9 +34,10 @@ if(${CONFIG_NORMAL})
 	endif()
 	target_include_directories(ape_config INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 
-	amun_fake_project(ape_config_
-		SOURCES include/ape/config.hpp src/dummy.cpp
-		INCLUDES include
+	amun_reorg_project(ape_config
+		SOURCES include/ape/config.hpp
+		PRIVATE_SOURCES src/dummy.cpp
+		INCLUDES ../include
 		FOLDER Libs)
 endif()
 
