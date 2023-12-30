@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(ApeConfig
-	VERSION "0.4.0"
+	VERSION "0.4.1"
 	DESCRIPTION "C++ compiler, OS, and standard library detect"
 	LANGUAGES CXX)
 
@@ -13,7 +13,7 @@ if (NOT DEFINED APE_SUPERPROJECT AND NOT AMUN_INCLUDED)
 			include(FetchContent)
 			FetchContent_Declare( amun
 				GIT_REPOSITORY https://github.com/xbigo/amun.git
-				GIT_TAG v0.3.0
+				GIT_TAG v0.4.1
 				)
 			FetchContent_MakeAvailable(amun)
 			include(${amun_SOURCE_DIR}/lib/amun/amun.cmake)
