@@ -93,6 +93,7 @@ namespace cppstandard {
 	struct cpp14_tag : cpp11_tag {};
 	struct cpp17_tag : cpp14_tag {};
 	struct cpp20_tag : cpp17_tag {};
+	struct cpp23_tag : cpp20_tag {};
 
 	enum version {
 		cpppre98 = 1,
@@ -101,7 +102,8 @@ namespace cppstandard {
 		cpp11 = 201103L,
 		cpp14 = 201402L,
 		cpp17 = 201703L,
-		cpp20 = 202002L
+		cpp20 = 202002L,
+		cpp23 = 202302L
 	};
 }
 #define CPP_STD_PRE98 1
@@ -111,6 +113,7 @@ namespace cppstandard {
 #define CPP_STD_14 201402L
 #define CPP_STD_17 201703L
 #define CPP_STD_20 202002L
+#define CPP_STD_23 202302L
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 #	define LINUX_OS_	1
@@ -322,32 +325,35 @@ using stdlib_type = stdlib::libcpp_stdlib;
 
 #endif
 
-#if __cplusplus == 1
-#	define CPP_PRE98	1
-#	define CPP_STANDARD CPP_STD_PRE98
-using cpp_standard = cppstandard::cpppre98_tag;
-#elif __cplusplus == 199711L
-#	define CPP_98	1
-#	define CPP_STANDARD CPP_STD_98
-using cpp_standard = cppstandard::cpp98_tag;
-#elif __cplusplus == 201103L
-#	define CPP_11	1
-#	define CPP_STANDARD CPP_STD_11
-using cpp_standard = cppstandard::cpp11_tag;
-#elif __cplusplus == 201402L
-#	define CPP_14	1
-#	define CPP_STANDARD CPP_STD_14
-using cpp_standard = cppstandard::cpp14_tag;
-#elif __cplusplus == 201703L
-#	define CPP_17	1
-#	define CPP_STANDARD CPP_STD_17
-using cpp_standard = cppstandard::cpp17_tag;
-#elif __cplusplus == 202002L
+
+#if __cplusplus >= 202302L
+#	define CPP_23	1
+#	define CPP_STANDARD CPP_STD_23
+using cpp_standard = cppstandard::cpp23_tag;
+#elif __cplusplus >= 202002L
 #	define CPP_20	1
 #	define CPP_STANDARD CPP_STD_20
 using cpp_standard = cppstandard::cpp20_tag;
-#else
-# error "Unknown cpp standard version"
+#elif __cplusplus >= 201703L
+#	define CPP_17	1
+#	define CPP_STANDARD CPP_STD_17
+using cpp_standard = cppstandard::cpp17_tag;
+#elif __cplusplus >= 201402L
+#	define CPP_14	1
+#	define CPP_STANDARD CPP_STD_14
+using cpp_standard = cppstandard::cpp14_tag;
+#elif __cplusplus >= 201103L
+#	define CPP_11	1
+#	define CPP_STANDARD CPP_STD_11
+using cpp_standard = cppstandard::cpp11_tag;
+#elif __cplusplus >= 199711L
+#	define CPP_98	1
+#	define CPP_STANDARD CPP_STD_98
+using cpp_standard = cppstandard::cpp98_tag;
+#else //__cplusplus >= 1
+#	define CPP_PRE98	1
+#	define CPP_STANDARD CPP_STD_PRE98
+using cpp_standard = cppstandard::cpppre98_tag;
 #endif
 
 template<typename T> struct os_is : std::false_type {};
