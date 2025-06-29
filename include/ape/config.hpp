@@ -447,8 +447,8 @@ END_APE_NAMESPACE
 //Redefine GSL::Expects to remove the check for release build by default
 #if !defined(NDEBUG) || defined(APE_KEEP_CONTRACT)
 #define APE_CONTRACT_ENABLED 1
-#define APE_Expects(cond, msg...) Expects(cond)
-#define APE_Ensures(cond, msg...) Ensures(cond)
+#define APE_Expects(cond, ...) Expects(cond)
+#define APE_Ensures(cond, ...) Ensures(cond)
 #else
 #define APE_CONTRACT_ENABLED 0
 #define APE_Expects(cond, msg...) 
